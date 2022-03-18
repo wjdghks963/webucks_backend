@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// products
+
+model Categories {
+  id         Int        @id @default(autoincrement())
+  name       String
+  created_at DateTime   @default(now())
+  Products   Products[]
+
+
+  @@map("category")
+}
+
+model Products {
+  id                Int                 @id @default(autoincrement())
+  korean_name       String
+  english_name      String
+  categories        Categories          @relation(fields: [category_id], references: [id])
+  category_id       Int
+  Product_images    Product_images[]
+  Product_allergies Product_allergies[]
+  Nutritions        Nutritions[]
+
+  @@map("products")
+}
+
+model Product_images {
+  id         Int      @id @default(autoincrement())
+  image_url  String
+  products   Products @relation(fields: [product_id], references: [id])
+  product_id Int
+  created_at DateTime @default(now())
+
+  @@map("product_images")
+}
+
+model Allergies {
+  id         Int      @id @default(autoincrement())
+  name       String
+  created_at DateTime @default(now())
+
+  Product_allergies Product_allergies[]
+
+  @@map("allergies")
+}
+
+model Product_allergies {
+  id         Int       @id @default(autoincrement())
+  prodcut    Products  @relation(fields: [product_id], references: [id])
+  product_id Int
+  allergy    Allergies @relation(fields: [allergy_id], references: [id])
+  allergy_id Int
+  created_at DateTime  @default(now())
+
+  @@map("products_allergies")
+}
+
+model Nutritions {
+  id         Int      @id @default(autoincrement())
+  caffein    Float
+  fat        Float
+  sugar      Float
+  sodium     Float
+  product    Products @relation(fields: [product_id], references: [id])
+  product_id Int
+  created_at DateTime @default(now())
+
+  @@map("nutritions")
+}
+
+// user
+
+model Users {
+  id            Int     @id @default(autoincrement())
+  email         String  @unique
+  password      String
+  username      String?
+  address       String?
+  phone_number  Int?
+  policy_agreed Boolean @default(true)
+
+  @@map("users")
+}
