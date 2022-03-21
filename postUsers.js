@@ -7,7 +7,7 @@ const postUsers = async (req,res) =>{
     const {email, password} = req.body;
 
 try{
-const changePassword = await prisma.$queryRaw`
+ await prisma.$queryRaw`
 UPDATE users SET password=${password} WHERE email=${email};
 `;
 console.log(email,password);

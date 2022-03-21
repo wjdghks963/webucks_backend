@@ -6,6 +6,8 @@ const {sendProdutById} = require('./productById')
 const {postSignup} = require('./handleSignup')
 const {getUsers} = require('./getUsers');
 const {postUsers} = require('./postUsers');
+const {loginUser} = require('./loginUser');
+const {verifyUser} = require('./verifyUser');
 
 const app = express()
 app.use(express.json())
@@ -20,6 +22,8 @@ app.get('/products', sendProducts)
 app.get('/products/:id', sendProdutById);
 app.route('/users').post(postUsers).get(getUsers);
 app.route('/users/signup').post(postSignup)
+app.post('/users/login',loginUser);
+app.get('user/verification', verifyUser)
 
 const server = http.createServer(app)
 
