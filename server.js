@@ -1,6 +1,7 @@
 const http = require('http');
 const express = require('express');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser')
 
 const routes = require('./routes');
 
@@ -8,6 +9,8 @@ const app = express();
 const logger = morgan("dev"); 
 app.use(logger);
 app.use(express.json());
+app.use(cookieParser());
+
 app.use(routes);
 
 app.get('/', (req, res) => {

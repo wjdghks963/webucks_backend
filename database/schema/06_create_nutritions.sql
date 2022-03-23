@@ -12,3 +12,5 @@ CREATE TABLE nutritions (
     PRIMARY KEY(id),
     foreign key (product_id) references products(id)
 )
+
+
